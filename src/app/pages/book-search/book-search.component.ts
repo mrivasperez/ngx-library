@@ -3,7 +3,7 @@ import {
   AuthorSearchResult,
   ISBNSearchResult,
   OpenlibraryService,
-} from '../../openlibrary.service';
+} from './openlibrary.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../shared/book.service';
 
