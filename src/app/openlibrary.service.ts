@@ -20,7 +20,7 @@ export class OpenlibraryService {
 
   public searchByISBN(isbn: string = '9781680507225') {
     return this.http.get(
-      `https://openlibrary.org/isbn/${isbn}.json`
+      `${this.baseUrl}/isbn/${isbn}.json`
     ) as Observable<ISBNSearchResult>;
   }
 }
