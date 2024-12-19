@@ -1,1 +1,30 @@
-<p>book-details works!</p>
+@if (bookDetails) {
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="">
+      <p class="fw-semibold m-0 p-0">
+        {{ bookDetails.title }}
+      </p>
+      <p class="fw-normal text-body-secondary m-0 p-0">
+        {{ bookDetails.subtitle }}
+      </p>
+    </div>
+
+    <div class="">
+      <button class="btn btn-warning me-2"><i class="bi bi-star"></i></button>
+      <button class="btn btn-danger">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>
+  </div>
+  <section class="my-4">
+    <img
+      src="{{ bookDetails.coverUrl }}"
+      alt="cover"
+      srcset=""
+      height="224"
+      width="180"
+    />
+  </section>
+</div>
+}

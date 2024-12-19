@@ -73,6 +73,8 @@ export class BookSearchComponent {
         author: this.authorInfo?.name,
         addedDate: new Date(),
         coverUrl: this.bookCoverImgUrl,
+        subtitle: this.bookInfo.subtitle,
+        publishDate: this.bookInfo.publish_date,
       });
 
       this.isBookInLibrary = true;

@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BookService } from '../../shared/book.service';
+import { Book } from '../../shared/types';
 
 @Component({
   selector: 'app-book-details',
   imports: [],
   templateUrl: './book-details.component.html',
-  styleUrl: './book-details.component.css'
+  styleUrl: './book-details.component.css',
 })
-export class BookDetailsComponent {
-
+export class BookDetailsComponent implements OnInit {
+  bookDetails: Book | undefined = undefined;
+  constructor(private route: ActivatedRoute, private books: BookService) {}
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const isbn = decodeURIComponent(String(params.get('isbn')));
+      this.bookDetails = this.books.getBook(isbn);
+    });
+  }
 }
