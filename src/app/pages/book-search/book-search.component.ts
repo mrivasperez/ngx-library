@@ -25,14 +25,18 @@ export class BookSearchComponent {
   isbn = new FormControl('9781680507225');
   error: undefined | string = undefined;
   bookCoverImgUrl = `https://covers.openlibrary.org/b/isbn/${this.isbn.value}-M.jpg`;
+  isBookInLibrary: boolean = false;
 
   handleFetchBookData(event: Event) {
     event.preventDefault();
     if (this.isbn.value?.length !== 13) {
       return alert('ISBN number required');
     }
-
     this.loading = true;
+
+    if (this.books.isBookInLibrary(this.isbn.value))
+      this.isBookInLibrary = true;
+    else this.isBookInLibrary = false;
 
     this.openlibrary.searchByISBN(this.isbn.value).subscribe({
       next: (data) => {
@@ -68,7 +72,10 @@ export class BookSearchComponent {
         title: this.bookInfo.title,
         author: this.authorInfo?.name,
         addedDate: new Date(),
+        coverUrl: this.bookCoverImgUrl,
       });
+
+      this.isBookInLibrary = true;
     }
   }
 }

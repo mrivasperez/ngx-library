@@ -24,6 +24,7 @@
   }
 </div>
 
+<!-- Render Book Info -->
 @if(bookInfo) {
 <div class="container mt-5">
   <img
@@ -45,10 +46,13 @@
   </p>
   } @else {
   <p><i class="bi bi-person-fill"></i> {{ authorInfo.name }}</p>
-  }
-
-  <button class="btn btn-primary mt-2" (click)="handleAddToLibrary()">
-    <i class="bi bi-plus-lg me-1"></i>Add To Library
-  </button>
+  } 
+  <!-- Add Book to Library -->
+  @if(!isBookInLibrary){<button
+    class="btn btn-primary mt-2"
+    (click)="handleAddToLibrary()"
+  >
+    <i class="bi bi-plus-lg me-1"></i>Add To Library</button
+  >}
 </div>
 }
