@@ -27,7 +27,17 @@ export class BookDetailsComponent implements OnInit {
     if (this.bookDetails) {
       this.books.deleteBook(this.bookDetails.isbn);
       return this.router.navigate(['/']);
+    } else return;
+  }
+
+  handleFavoriteBook() {
+    if (!this.bookDetails) return;
+    if (this.bookDetails?.isFavorite) {
+      this.books.updateBook({ ...this.bookDetails, isFavorite: false });
+      return (this.bookDetails.isFavorite = false);
+    } else {
+      this.books.updateBook({ ...this.bookDetails, isFavorite: true });
+      return (this.bookDetails.isFavorite = true);
     }
-    else return;
   }
 }
