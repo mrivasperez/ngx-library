@@ -1,19 +1,24 @@
 <div class="container mt-4">
-  <input
-    type="text"
-    class="form-control"
-    placeholder="ISBN"
-    [formControl]="isbn"
-  />
-  <button class="btn btn-primary" (click)="handleFetchBookData()">
-    <i class="bi bi-search"></i>
-  </button>
+  <form (submit)="handleFetchBookData($event)">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="ISBN"
+      [formControl]="isbn"
+      minlength="13"
+      maxlength="13"
+    />
+  </form>
 </div>
 
 <div class="container mt-4">
   @if(loading) {
   <div class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
+  </div>
+  } @if(error) {
+  <div class="alert alert-danger shadow-sm" role="alert">
+    {{ error }}
   </div>
   }
 </div>
