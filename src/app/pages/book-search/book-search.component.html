@@ -46,13 +46,17 @@
   </p>
   } @else {
   <p><i class="bi bi-person-fill"></i> {{ authorInfo.name }}</p>
-  } 
+  }
   <!-- Add Book to Library -->
   @if(!isBookInLibrary){<button
     class="btn btn-primary mt-2"
     (click)="handleAddToLibrary()"
   >
     <i class="bi bi-plus-lg me-1"></i>Add To Library</button
-  >}
+  >} @else {
+  <a href="books/{{ isbn.value }}" class="btn btn-primary"
+    >Book Details<i class="bi bi-arrow-right ms-1"></i
+  ></a>
+  }
 </div>
 }

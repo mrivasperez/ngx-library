@@ -3,9 +3,10 @@ import {
   AuthorSearchResult,
   ISBNSearchResult,
   OpenlibraryService,
-} from '../../openlibrary.service';
+} from './openlibrary.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../shared/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-search',
@@ -16,7 +17,8 @@ import { BookService } from '../../shared/book.service';
 export class BookSearchComponent {
   constructor(
     private openlibrary: OpenlibraryService,
-    private books: BookService
+    private books: BookService,
+    private router: Router
   ) {}
 
   bookInfo: undefined | ISBNSearchResult = undefined;
@@ -73,9 +75,13 @@ export class BookSearchComponent {
         author: this.authorInfo?.name,
         addedDate: new Date(),
         coverUrl: this.bookCoverImgUrl,
+        subtitle: this.bookInfo.subtitle,
+        publishDate: this.bookInfo.publish_date,
       });
 
       this.isBookInLibrary = true;
-    }
+
+      return this.router.navigate([`books/${this.isbn.value}`]);
+    } else return;
   }
 }

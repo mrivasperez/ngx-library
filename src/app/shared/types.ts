@@ -8,4 +8,5 @@ export interface Book {
   notes?: string;
   addedDate: Date;
   isFavorite?: boolean;
+  subtitle?: string;
 }
