@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { OpenlibraryService } from './openlibrary.service';
+import { ISBNSearchResult, OpenlibraryService } from './openlibrary.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,12 @@ export class AppComponent implements OnInit {
 
   constructor(private openlibrary: OpenlibraryService) {}
 
+  bookInfo: ISBNSearchResult = {} as ISBNSearchResult;
+
   ngOnInit(): void {
-    this.openlibrary.searchByISBN().subscribe((res: any) => console.log(res));
+    this.openlibrary.searchByISBN().subscribe((res) => {
+      const data = res
+      console.log(data)
+    });
   }
 }
