@@ -9,5 +9,6 @@ export class BookService {
 
   addBook(book: Book) {
     localStorage.setItem(this.localStorageKey, JSON.stringify([book]));
+    console.log(book)
   }
 }

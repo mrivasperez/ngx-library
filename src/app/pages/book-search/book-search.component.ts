@@ -5,6 +5,7 @@ import {
   OpenlibraryService,
 } from '../../openlibrary.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { BookService } from '../../shared/book.service';
 
 @Component({
   selector: 'app-book-search',
@@ -13,7 +14,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './book-search.component.css',
 })
 export class BookSearchComponent {
-  constructor(private openlibrary: OpenlibraryService) {}
+  constructor(
+    private openlibrary: OpenlibraryService,
+    private books: BookService
+  ) {}
 
   bookInfo: undefined | ISBNSearchResult = undefined;
   authorInfo: undefined | AuthorSearchResult = undefined;
@@ -40,6 +44,7 @@ export class BookSearchComponent {
         } else {
           this.bookCoverImgUrl = `https://covers.openlibrary.org/b/isbn/${this.isbn.value}-M.jpg`;
         }
+        console.log(data);
         this.bookInfo = data;
         this.loading = false;
         // load author info
@@ -54,5 +59,16 @@ export class BookSearchComponent {
       },
       complete: () => (this.loading = false),
     });
+  }
+
+  handleAddToLibrary() {
+    if (this.bookInfo && this.authorInfo) {
+      this.books.addBook({
+        isbn: String(this.isbn.value),
+        title: this.bookInfo.title,
+        author: this.authorInfo?.name,
+        addedDate: new Date(),
+      });
+    }
   }
 }
