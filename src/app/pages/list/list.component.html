@@ -1,0 +1,23 @@
+<div class="container">
+  <!-- Header -->
+  <div class="my-4 d-flex justify-content-between align-items-center">
+    <h1>Library</h1>
+    <a href="search" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+  </div>
+
+  <!-- Books! -->
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
+    @for (book of bookList; track book.isbn) {
+    <a class="col mb-4" href="books/{{ book.isbn }}">
+      <img
+        src="{{ book.coverUrl }}"
+        alt=""
+        class="mb-3"
+        height="224"
+        width="180"
+      />
+      <p class="mb-0 pb-0">{{ book.title }}</p>
+    </a>
+    }
+  </div>
+</div>

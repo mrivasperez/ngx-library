@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BookSearchComponent } from './pages/book-search/book-search.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [BookSearchComponent],
-  templateUrl: './app.component.html',
+  imports: [RouterOutlet],
+  template: '<router-outlet />',
 })
 export class AppComponent {
   title = 'library';
