@@ -25,7 +25,13 @@
 
 @if(bookInfo) {
 <div class="container mt-5">
-  <img src="{{ bookCoverImgUrl }}" alt="cover" srcset="" height="224" width="180" />
+  <img
+    src="{{ bookCoverImgUrl }}"
+    alt="cover"
+    srcset=""
+    height="224"
+    width="180"
+  />
   <p class="fw-semibold mb-0 mt-3">
     {{ bookInfo.title }}
   </p>
@@ -37,7 +43,11 @@
     <span class="placeholder col-6"></span>
   </p>
   } @else {
-  <p>By {{ authorInfo.name }}</p>
+  <p><i class="bi bi-person-fill"></i> {{ authorInfo.name }}</p>
   }
+
+  <button class="btn btn-primary mt-3">
+    <i class="bi bi-plus-lg me-1"></i>Add To Library
+  </button>
 </div>
 }
