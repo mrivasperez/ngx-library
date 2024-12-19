@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthorSearchResult, ISBNSearchResult, OpenlibraryService } from '../../openlibrary.service';
+import {
+  AuthorSearchResult,
+  ISBNSearchResult,
+  OpenlibraryService,
+} from '../../openlibrary.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -20,7 +24,6 @@ export class BookSearchComponent {
 
   handleFetchBookData(event: Event) {
     event.preventDefault();
-
     if (this.isbn.value?.length !== 13) {
       return alert('ISBN number required');
     }
@@ -29,7 +32,14 @@ export class BookSearchComponent {
 
     this.openlibrary.searchByISBN(this.isbn.value).subscribe({
       next: (data) => {
-        console.log(data);
+        this.error = undefined;
+        if (!data.covers) {
+          // TODO choose better placeholder
+          this.bookCoverImgUrl =
+            'https://images.unsplash.com/photo-1529590003495-b2646e2718bf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJvb2t8ZW58MHx8MHx8fDA%3D';
+        } else {
+          this.bookCoverImgUrl = `https://covers.openlibrary.org/b/isbn/${this.isbn.value}-M.jpg`;
+        }
         this.bookInfo = data;
         this.loading = false;
         // load author info
