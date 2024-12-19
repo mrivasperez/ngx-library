@@ -1,1 +1,19 @@
-<h2><i class="bi bi-eye"></i>Lorem, ipsum.</h2>
+<div class="container mt-4">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="ISBN"
+    [formControl]="isbn"
+  />
+  <button class="btn btn-primary" (click)="handleFetchBookData()">
+    <i class="bi bi-search"></i>
+  </button>
+</div>
+
+<div class="container mt-4">
+  @if(loading) {
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  }
+</div>
