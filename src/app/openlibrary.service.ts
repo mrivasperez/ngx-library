@@ -18,7 +18,7 @@ export class OpenlibraryService {
   constructor(private http: HttpClient) {}
   private baseUrl = 'https://openlibrary.org';
 
-  public searchByISBN(isbn: string = '9781680507225') {
+  public searchByISBN(isbn: string) {
     return this.http.get(
       `${this.baseUrl}/isbn/${isbn}.json`
     ) as Observable<ISBNSearchResult>;
