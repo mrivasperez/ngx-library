@@ -9,6 +9,11 @@ export interface ISBNSearchResult {
   number_of_pages: number;
   publish_date: string;
   authors: { key: string }[];
+  covers: string[];
+}
+
+export interface AuthorSearchResult {
+  name: string;
 }
 
 @Injectable({
@@ -22,5 +27,11 @@ export class OpenlibraryService {
     return this.http.get(
       `${this.baseUrl}/isbn/${isbn}.json`
     ) as Observable<ISBNSearchResult>;
+  }
+
+  public searchAuthor(key: string) {
+    return this.http.get(
+      `${this.baseUrl}${key}.json`
+    ) as Observable<AuthorSearchResult>;
   }
 }
