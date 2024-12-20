@@ -88,11 +88,11 @@ export class BookSearchComponent implements OnInit {
   }
 
   handleAddToLibrary() {
-    if (this.bookInfo && this.authorInfo) {
+    if (this.bookInfo && this.authorInfo || this.bookInfo && !this.bookInfo.authors) {
       this.books.addBook({
         isbn: String(this.isbn.value),
         title: this.bookInfo.title,
-        author: this.authorInfo?.name,
+        author: this.authorInfo?.name || "Author",
         addedDate: new Date(),
         coverUrl: this.bookCoverImgUrl,
         subtitle: this.bookInfo.subtitle,
