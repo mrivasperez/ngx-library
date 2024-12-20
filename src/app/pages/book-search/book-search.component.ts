@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthorSearchResult,
   ISBNSearchResult,
@@ -6,7 +6,7 @@ import {
 } from './openlibrary.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../shared/book.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-search',
@@ -14,20 +14,30 @@ import { Router } from '@angular/router';
   templateUrl: './book-search.component.html',
   styleUrl: './book-search.component.css',
 })
-export class BookSearchComponent {
+export class BookSearchComponent implements OnInit {
   constructor(
     private openlibrary: OpenlibraryService,
     private books: BookService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   bookInfo: undefined | ISBNSearchResult = undefined;
   authorInfo: undefined | AuthorSearchResult = undefined;
   loading: boolean = false;
-  isbn = new FormControl('9781680507225');
+  isbn = new FormControl('');
   error: undefined | string = undefined;
   bookCoverImgUrl = `https://covers.openlibrary.org/b/isbn/${this.isbn.value}-M.jpg`;
   isBookInLibrary: boolean = false;
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      const isbnFromParams = params['isbn'];
+      if (isbnFromParams) {
+        this.isbn.setValue(isbnFromParams);
+      }
+    });
+  }
 
   handleFetchBookData(event: Event) {
     event.preventDefault();
