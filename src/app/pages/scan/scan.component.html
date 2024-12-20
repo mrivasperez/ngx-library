@@ -1,1 +1,5 @@
-<p>scan works!</p>
+<p><i class="bi bi-upc-scan">Scan ISBN</i></p>
+<zxing-scanner
+  [formats]="allowedFormat"
+  (scanSuccess)="onScanSuccess($event)"
+></zxing-scanner>
