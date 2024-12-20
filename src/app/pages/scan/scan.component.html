@@ -1,6 +1,9 @@
-<p><i class="bi bi-upc-scan">Scan ISBN</i></p>
-<zxing-scanner
-  [formats]="allowedFormat"
-  (scanSuccess)="onScanSuccess($event)"
-  [autofocusEnabled]="true"
-></zxing-scanner>
+<div class="container">
+  <h1 class="my-4"><i class="bi bi-upc-scan me-3"></i>Scan ISBN</h1>
+  <zxing-scanner
+    class="rounded border m-0 p-0 bg-primary overflow-hidden"
+    [formats]="allowedFormat"
+    (scanSuccess)="onScanSuccess($event)"
+    [autofocusEnabled]="true"
+  ></zxing-scanner>
+</div>
