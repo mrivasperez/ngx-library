@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { BarcodeFormat } from '@zxing/library';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
@@ -11,7 +12,12 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 export class ScanComponent {
   allowedFormat = [BarcodeFormat.EAN_13];
 
-  onScanSuccess(scan: string){
-    console.log(scan)
+  constructor(private router: Router) {}
+
+  onScanSuccess(scan: string) {
+    if (scan.length === 13) {
+      this.router.navigate(['/search'], { queryParams: { isbn: scan } });
+    }
+    console.log(scan);
   }
 }
