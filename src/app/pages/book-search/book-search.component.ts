@@ -35,12 +35,21 @@ export class BookSearchComponent implements OnInit {
       const isbnFromParams = params['isbn'];
       if (isbnFromParams) {
         this.isbn.setValue(isbnFromParams);
+        this.handleFetchBookData();
+      }
+    });
+
+    this.isbn.valueChanges.subscribe((value) => {
+      if (value && value.length === 13) {
+        this.handleFetchBookData();
       }
     });
   }
 
-  handleFetchBookData(event: Event) {
-    event.preventDefault();
+  handleFetchBookData(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     if (this.isbn.value?.length !== 13) {
       return alert('ISBN number required');
     }
@@ -64,9 +73,10 @@ export class BookSearchComponent implements OnInit {
         this.bookInfo = data;
         this.loading = false;
         // load author info
-        this.openlibrary
-          .searchAuthor(data.authors[0].key)
-          .subscribe((res) => (this.authorInfo = res));
+        if (data.authors)
+          this.openlibrary
+            .searchAuthor(data.authors[0].key)
+            .subscribe((res) => (this.authorInfo = res));
       },
       error: () => {
         this.error = 'Something went wrong.';
