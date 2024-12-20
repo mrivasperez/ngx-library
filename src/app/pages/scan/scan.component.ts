@@ -15,6 +15,7 @@ export class ScanComponent {
   constructor(private router: Router) {}
 
   onScanSuccess(scan: string) {
+    console.log(scan)
     if (scan.length === 13) {
       this.router.navigate(['/search'], { queryParams: { isbn: scan } });
     }
