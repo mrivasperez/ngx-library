@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthorSearchResult,
   ISBNSearchResult,
@@ -6,7 +6,7 @@ import {
 } from './openlibrary.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../shared/book.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-search',
@@ -14,23 +14,42 @@ import { Router } from '@angular/router';
   templateUrl: './book-search.component.html',
   styleUrl: './book-search.component.css',
 })
-export class BookSearchComponent {
+export class BookSearchComponent implements OnInit {
   constructor(
     private openlibrary: OpenlibraryService,
     private books: BookService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   bookInfo: undefined | ISBNSearchResult = undefined;
   authorInfo: undefined | AuthorSearchResult = undefined;
   loading: boolean = false;
-  isbn = new FormControl('9781680507225');
+  isbn = new FormControl('');
   error: undefined | string = undefined;
   bookCoverImgUrl = `https://covers.openlibrary.org/b/isbn/${this.isbn.value}-M.jpg`;
   isBookInLibrary: boolean = false;
 
-  handleFetchBookData(event: Event) {
-    event.preventDefault();
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      const isbnFromParams = params['isbn'];
+      if (isbnFromParams) {
+        this.isbn.setValue(isbnFromParams);
+        this.handleFetchBookData();
+      }
+    });
+
+    this.isbn.valueChanges.subscribe((value) => {
+      if (value && value.length === 13) {
+        this.handleFetchBookData();
+      }
+    });
+  }
+
+  handleFetchBookData(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     if (this.isbn.value?.length !== 13) {
       return alert('ISBN number required');
     }
@@ -54,9 +73,10 @@ export class BookSearchComponent {
         this.bookInfo = data;
         this.loading = false;
         // load author info
-        this.openlibrary
-          .searchAuthor(data.authors[0].key)
-          .subscribe((res) => (this.authorInfo = res));
+        if (data.authors)
+          this.openlibrary
+            .searchAuthor(data.authors[0].key)
+            .subscribe((res) => (this.authorInfo = res));
       },
       error: () => {
         this.error = 'Something went wrong.';
@@ -68,11 +88,11 @@ export class BookSearchComponent {
   }
 
   handleAddToLibrary() {
-    if (this.bookInfo && this.authorInfo) {
+    if (this.bookInfo && this.authorInfo || this.bookInfo && !this.bookInfo.authors) {
       this.books.addBook({
         isbn: String(this.isbn.value),
         title: this.bookInfo.title,
-        author: this.authorInfo?.name,
+        author: this.authorInfo?.name || "Author",
         addedDate: new Date(),
         coverUrl: this.bookCoverImgUrl,
         subtitle: this.bookInfo.subtitle,
