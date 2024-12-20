@@ -1,6 +1,9 @@
 <div class="container mt-4">
-  <h1 class="mb-3">Add Book</h1>
-  <form (submit)="handleFetchBookData($event)">
+  <h1 class="mb-4">Add Book</h1>
+  <form
+    (submit)="handleFetchBookData($event)"
+    class="input-group shadow-sm rounded"
+  >
     <input
       type="text"
       class="form-control"
@@ -9,6 +12,9 @@
       minlength="13"
       maxlength="13"
     />
+    <a class="btn btn-primary" href="scan">
+      <i class="bi bi-upc-scan"></i>
+    </a>
   </form>
 </div>
 
