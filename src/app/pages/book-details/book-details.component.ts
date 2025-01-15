@@ -10,7 +10,9 @@ import { Book } from '../../shared/types';
   styleUrl: './book-details.component.css',
 })
 export class BookDetailsComponent implements OnInit {
+  isbn: string = '';
   bookDetails: Book | undefined = undefined;
+
   constructor(
     private route: ActivatedRoute,
     private books: BookService,
@@ -18,8 +20,8 @@ export class BookDetailsComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const isbn = decodeURIComponent(String(params.get('isbn')));
-      this.bookDetails = this.books.getBook(isbn);
+      this.isbn = decodeURIComponent(String(params.get('isbn')));
+      this.bookDetails = this.books.getBook(this.isbn);
     });
   }
 
