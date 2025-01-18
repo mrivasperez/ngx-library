@@ -27,7 +27,8 @@ export class BookDetailsComponent implements OnInit {
 
   handleDeleteBook() {
     if (this.bookDetails) {
-      this.books.deleteBook(this.bookDetails.isbn);
+      const isDeleted = this.books.deleteBook(this.bookDetails.isbn);
+      if (!isDeleted) return;
       return this.router.navigate(['/']);
     } else return;
   }
