@@ -41,9 +41,11 @@ export class BookService {
     localStorage.setItem(this.localStorageKey, JSON.stringify(updatedBooks));
   }
 
-  deleteBook(isbn: string): void {
+  deleteBook(isbn: string): boolean {
     const books = this.getAllBooks().filter((book) => book.isbn !== isbn);
+    if (!confirm('Are you sure you want to delete this book?')) return false;
     localStorage.setItem(this.localStorageKey, JSON.stringify(books));
+    return true;
   }
 
   isBookInLibrary(isbn: string): boolean {
