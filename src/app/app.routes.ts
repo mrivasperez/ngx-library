@@ -3,6 +3,7 @@ import { ListComponent } from './pages/list/list.component';
 import { BookSearchComponent } from './pages/book-search/book-search.component';
 import { BookDetailsComponent } from './pages/book-details/book-details.component';
 import { ScanComponent } from './pages/scan/scan.component';
+import { CustomizationComponent } from './pages/customization/customization.component';
 
 export interface AppRoute extends Route {
   title: string;
@@ -41,5 +42,10 @@ export const routes: AppRoute[] = [
     title: 'Scan',
     path: 'scan',
     component: ScanComponent,
+  },
+  {
+    title: 'Keyboard Shortcuts',
+    path: 'customization',
+    component: CustomizationComponent,
   },
 ];
